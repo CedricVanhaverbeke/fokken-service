@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1608409598107" clover="3.2.0">
+  <project timestamp="1608409598107" name="All files">
+    <metrics statements="60" coveredstatements="50" conditionals="24" coveredconditionals="22" methods="31" coveredmethods="23" elements="115" coveredelements="95" complexity="0" loc="60" ncloc="60" packages="1" files="4" classes="4"/>
+    <file name="card.js" path="/home/cedric/Documents/Projects/fokken-game-server/src/game/card.js">
+      <metrics statements="9" coveredstatements="8" conditionals="16" coveredconditionals="15" methods="1" coveredmethods="1"/>
+      <line num="1" count="3" type="stmt"/>
+      <line num="9" count="681" type="cond" truecount="2" falsecount="0"/>
+      <line num="15" count="1" type="stmt"/>
+      <line num="18" count="680" type="cond" truecount="4" falsecount="0"/>
+      <line num="19" count="3" type="stmt"/>
+      <line num="22" count="677" type="cond" truecount="3" falsecount="1"/>
+      <line num="23" count="0" type="stmt"/>
+      <line num="26" count="677" type="cond" truecount="2" falsecount="0"/>
+      <line num="27" count="677" type="stmt"/>
+    </file>
+    <file name="deck.js" path="/home/cedric/Documents/Projects/fokken-game-server/src/game/deck.js">
+      <metrics statements="14" coveredstatements="13" conditionals="2" coveredconditionals="2" methods="6" coveredmethods="5"/>
+      <line num="5" count="52" type="stmt"/>
+      <line num="6" count="676" type="stmt"/>
+      <line num="9" count="13" type="stmt"/>
+      <line num="14" count="13" type="stmt"/>
+      <line num="19" count="13" type="stmt"/>
+      <line num="21" count="676" type="stmt"/>
+      <line num="24" count="676" type="stmt"/>
+      <line num="25" count="676" type="stmt"/>
+      <line num="26" count="676" type="stmt"/>
+      <line num="29" count="13" type="stmt"/>
+      <line num="33" count="0" type="stmt"/>
+      <line num="37" count="50" type="cond" truecount="2" falsecount="0"/>
+      <line num="38" count="1" type="stmt"/>
+      <line num="41" count="49" type="stmt"/>
+    </file>
+    <file name="game.js" path="/home/cedric/Documents/Projects/fokken-game-server/src/game/game.js">
+      <metrics statements="31" coveredstatements="23" conditionals="6" coveredconditionals="5" methods="22" coveredmethods="15"/>
+      <line num="6" count="7" type="stmt"/>
+      <line num="7" count="7" type="stmt"/>
+      <line num="8" count="7" type="stmt"/>
+      <line num="9" count="7" type="stmt"/>
+      <line num="10" count="7" type="stmt"/>
+      <line num="14" count="4" type="stmt"/>
+      <line num="18" count="42" type="cond" truecount="1" falsecount="1"/>
+      <line num="19" count="21" type="stmt"/>
+      <line num="24" count="1" type="stmt"/>
+      <line num="26" count="1" type="stmt"/>
+      <line num="30" count="0" type="stmt"/>
+      <line num="39" count="3" type="stmt"/>
+      <line num="40" count="12" type="stmt"/>
+      <line num="43" count="3" type="stmt"/>
+      <line num="44" count="12" type="stmt"/>
+      <line num="51" count="27" type="stmt"/>
+      <line num="64" count="3" type="stmt"/>
+      <line num="70" count="3" type="stmt"/>
+      <line num="71" count="12" type="stmt"/>
+      <line num="75" count="36" type="stmt"/>
+      <line num="81" count="3" type="stmt"/>
+      <line num="82" count="12" type="stmt"/>
+      <line num="83" count="12" type="stmt"/>
+      <line num="86" count="3" type="stmt"/>
+      <line num="91" count="0" type="stmt"/>
+      <line num="92" count="0" type="stmt"/>
+      <line num="95" count="0" type="stmt"/>
+      <line num="98" count="0" type="stmt"/>
+      <line num="104" count="0" type="stmt"/>
+      <line num="107" count="0" type="stmt"/>
+      <line num="108" count="0" type="stmt"/>
+    </file>
+    <file name="player.js" path="/home/cedric/Documents/Projects/fokken-game-server/src/game/player.js">
+      <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+      <line num="3" count="4" type="stmt"/>
+      <line num="4" count="4" type="stmt"/>
+      <line num="5" count="4" type="stmt"/>
+      <line num="6" count="4" type="stmt"/>
+      <line num="7" count="4" type="stmt"/>
+      <line num="11" count="1" type="stmt"/>
+    </file>
+  </project>
+</coverage>

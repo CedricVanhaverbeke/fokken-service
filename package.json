@@ -1,0 +1,37 @@
+{
+  "name": "fokken-game-server",
+  "version": "1.0.0",
+  "description": "Server for one game of fokken",
+  "main": "./src/index.js",
+  "author": "Cedric Vanhaverbeke",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "babel src -d dist",
+    "start": "yarn build && node dist",
+    "restart": "rimraf dist && yarn start",
+    "dev": "nodemon --exec yarn restart",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@babel/cli": "^7.12.8",
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.7",
+    "global": "^4.4.0",
+    "nodemon": "^2.0.6",
+    "socket.io": "^3.0.3",
+    "uuid": "^8.3.1"
+  },
+  "devDependencies": {
+    "babel-jest": "^26.6.3",
+    "jest": "^26.6.3",
+    "prettier": "^2.2.1",
+    "rimraf": "^3.0.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    }
+  }
+}
