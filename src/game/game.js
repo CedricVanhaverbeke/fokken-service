@@ -25,6 +25,12 @@ class Game {
     this.players[indexToModify].addCardToHand(card);
   }
 
+  removeCardFromPlayer(playerId, card) {
+    const indexToModify = this.players.findIndex(({ id }) => playerId === id);
+
+    this.players[indexToModify].removeCard(card);
+  }
+
   getPlayerOrder() {
     return this.players.map(
       ({ socket, hand, table, ...otherInfo }) => otherInfo

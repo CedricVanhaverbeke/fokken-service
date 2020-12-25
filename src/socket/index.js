@@ -76,10 +76,15 @@ const gameSocket = (port) => {
       const nextPlayer = game.setNextTurn(socket.id);
       const drawedCard = game.deck.popCards(1);
 
+      // remove card from player that played card
+      game.removeCardFromPlayer(socket.id, card);
+
       // add card to deck of player if pile is not empty
       if (drawedCard) {
-        game.addCardToPlayer(socket.id, card);
+        game.addCardToPlayer(socket.id, drawedCard);
       }
+
+      console.log(JSON.stringify(game.getPlayerView(socket.id)));
 
       game.players.forEach(({ socket: playerSocket }) => {
         playerSocket.emit(
@@ -88,8 +93,7 @@ const gameSocket = (port) => {
             ...card,
             turn: nextPlayer,
             drawPileAmount: game.deck.size(),
-            ...game.getPlayerView(id),
-            ...(socket.id === playerSocket.id && { drawedCard }),
+            ...game.getPlayerView(playerSocket.id),
           })
         );
       });
