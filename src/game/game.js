@@ -7,6 +7,7 @@ class Game {
     this.deck = new Deck();
     this.players = [hostPlayer];
     this.turn = null;
+    this.playedCards = []; // array that contains all played cards
   }
 
   getPlayer(playerId) {
@@ -17,6 +18,13 @@ class Game {
     if (!this.players.find(({ id }) => id === player.id)) {
       this.players = [...this.players, player];
     }
+  }
+
+  // there can be mutliple cards played
+  addCardsToPlayedCards(cards) {
+    const newCards = Array.isArray(cards) ? cards : [cards];
+
+    this.playedCards = [...this.playedCards, ...newCards];
   }
 
   addCardToPlayer(playerId, card) {

@@ -34,6 +34,7 @@ describe("game", () => {
       Object {
         "gameId": "123",
         "hostId": "host_id",
+        "playedCards": Array [],
         "players": Array [
           Player {
             "hand": Array [],
@@ -75,6 +76,25 @@ describe("game", () => {
         "turn": null,
       }
     `);
+  });
+
+  describe("Add card to played cards", () => {
+    it("should add one card", () => {
+      expect(mockGame.playedCards).toHaveLength(0);
+
+      mockGame.addCardsToPlayedCards({ number: 1, suit: 0 });
+      expect(mockGame.playedCards).toHaveLength(1);
+    });
+
+    it("should add multiple cards", () => {
+      expect(mockGame.playedCards).toHaveLength(0);
+
+      mockGame.addCardsToPlayedCards([
+        { number: 1, suit: 0 },
+        { number: 1, suit: 1 },
+      ]);
+      expect(mockGame.playedCards).toHaveLength(2);
+    });
   });
 
   describe("Add card to player", () => {

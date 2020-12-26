@@ -3,6 +3,8 @@ import Server from "socket.io";
 import Game from "../game/game";
 import Player from "../game/player";
 
+import validMoves from "../game/validMoves";
+
 const gameSocket = (port) => {
   const io = Server(port, {
     cors: {
@@ -73,8 +75,26 @@ const gameSocket = (port) => {
     // If a player plays a card, all other players need to be notified.
     socket.on("PLAY_CARD", (payload) => {
       const card = JSON.parse(payload);
+
+      const firstCard = game.playedCards.length === 0;
+      const lastPlayedCard = game.playedCards[game.playedCards.length - 1];
+
+      // check if card was valid
+      if (
+        !firstCard &&
+        lastPlayedCard &&
+        !validMoves(lastPlayedCard).includes(card) &&
+        socket.id !== game.turn
+      ) {
+        // TODO: player is somehow cheating
+
+        console.log("Player is somehow cheating, skipping this false action");
+        return;
+      }
       const nextPlayer = game.setNextTurn(socket.id);
       const drawedCard = game.deck.popCards(1);
+
+      game.addCardsToPlayedCards(card);
 
       // remove card from player that played card
       game.removeCardFromPlayer(socket.id, card);
@@ -90,9 +110,9 @@ const gameSocket = (port) => {
         playerSocket.emit(
           "CARD_PLAYED",
           JSON.stringify({
-            ...card,
             turn: nextPlayer,
             drawPileAmount: game.deck.size(),
+            playedCards: game.playedCards,
             ...game.getPlayerView(playerSocket.id),
           })
         );
