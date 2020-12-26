@@ -73,12 +73,14 @@ const gameSocket = (port) => {
     });
 
     // If a player plays a card, all other players need to be notified.
+    // TODO: Check for cheating here
     socket.on("PLAY_CARD", (payload) => {
       const cards = JSON.parse(payload);
 
-      // TODO: Check for cheating
-      const isFirstCard = game.playedCards.length === 0;
-      const lastPlayedCard = game.playedCards[game.playedCards.length - 1];
+      const playedNumber = Array.isArray(cards)
+        ? cards[0].number
+        : cards.number;
+      const playedAmount = Array.isArray(cards) ? cards.length : 1;
 
       const nextPlayer = game.setNextTurn(socket.id);
       const drawedCards = game.deck.popCards(cards.length);
@@ -100,6 +102,32 @@ const gameSocket = (port) => {
             turn: nextPlayer,
             drawPileAmount: game.deck.size(),
             playedCards: game.playedCards,
+            message: `${
+              game.players.find(({ id }) => id === socket.id).userName
+            } played ${playedAmount} ${playedNumber}${
+              playedAmount > 1 ? "s" : ""
+            }`,
+            ...game.getPlayerView(playerSocket.id),
+          })
+        );
+      });
+    });
+
+    socket.on("TAKE_PLAYED_CARDS", () => {
+      const nextPlayer = game.setNextTurn(socket.id);
+      game.addCardsToPlayer(socket.id, game.playedCards);
+      game.playedCards = [];
+
+      game.players.forEach(({ socket: playerSocket }) => {
+        playerSocket.emit(
+          "CARD_PLAYED",
+          JSON.stringify({
+            turn: nextPlayer,
+            drawPileAmount: game.deck.size(),
+            playedCards: game.playedCards,
+            message: `${
+              game.players.find(({ id }) => id === socket.id).userName
+            } needed to take all the cards`,
             ...game.getPlayerView(playerSocket.id),
           })
         );
