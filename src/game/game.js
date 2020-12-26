@@ -27,16 +27,16 @@ class Game {
     this.playedCards = [...this.playedCards, ...newCards];
   }
 
-  addCardToPlayer(playerId, card) {
+  addCardsToPlayer(playerId, cards) {
     const indexToModify = this.players.findIndex(({ id }) => playerId === id);
 
-    this.players[indexToModify].addCardToHand(card);
+    this.players[indexToModify].addCardsToHand(cards);
   }
 
-  removeCardFromPlayer(playerId, card) {
+  removeCardsFromPlayer(playerId, cards) {
     const indexToModify = this.players.findIndex(({ id }) => playerId === id);
 
-    this.players[indexToModify].removeCard(card);
+    this.players[indexToModify].removeCards(cards);
   }
 
   getPlayerOrder() {

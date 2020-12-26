@@ -74,37 +74,24 @@ const gameSocket = (port) => {
 
     // If a player plays a card, all other players need to be notified.
     socket.on("PLAY_CARD", (payload) => {
-      const card = JSON.parse(payload);
+      const cards = JSON.parse(payload);
 
-      const firstCard = game.playedCards.length === 0;
+      // TODO: Check for cheating
+      const isFirstCard = game.playedCards.length === 0;
       const lastPlayedCard = game.playedCards[game.playedCards.length - 1];
 
-      // check if card was valid
-      if (
-        !firstCard &&
-        lastPlayedCard &&
-        !validMoves(lastPlayedCard).includes(card) &&
-        socket.id !== game.turn
-      ) {
-        // TODO: player is somehow cheating
-
-        console.log("Player is somehow cheating, skipping this false action");
-        return;
-      }
       const nextPlayer = game.setNextTurn(socket.id);
-      const drawedCard = game.deck.popCards(1);
+      const drawedCards = game.deck.popCards(cards.length);
 
-      game.addCardsToPlayedCards(card);
+      game.addCardsToPlayedCards(cards);
 
       // remove card from player that played card
-      game.removeCardFromPlayer(socket.id, card);
+      game.removeCardsFromPlayer(socket.id, cards);
 
       // add card to deck of player if pile is not empty
-      if (drawedCard) {
-        game.addCardToPlayer(socket.id, drawedCard);
+      if (drawedCards) {
+        game.addCardsToPlayer(socket.id, drawedCards);
       }
-
-      console.log(JSON.stringify(game.getPlayerView(socket.id)));
 
       game.players.forEach(({ socket: playerSocket }) => {
         playerSocket.emit(

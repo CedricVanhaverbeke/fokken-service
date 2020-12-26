@@ -7,29 +7,36 @@ class Player {
     this.table = [];
   }
 
-  addCardToHand(card) {
-    this.hand = [...this.hand, card];
+  addCardsToHand(cards) {
+    const newCards = Array.isArray(cards) ? cards : [cards];
+    this.hand = [...this.hand, ...newCards];
   }
 
   // Remove the card from somewhere
   // catch the error if there is no card in the hand
-  removeCard(card) {
+  removeCards(c) {
+    const cards = Array.isArray(c) ? c : [c];
     let amountOfCardsRemoved = 0;
+
+    cards.forEach((card) => {
+      try {
+        this.removeCardFromHand(card);
+        amountOfCardsRemoved++;
+      } catch {}
+    });
+
+    // If we are removing a card from the table, it will always
+    // be a single card
     try {
-      this.removeCardFromHand(card);
+      this.removeCardFromTable(cards[0]);
       amountOfCardsRemoved++;
     } catch {}
 
-    try {
-      this.removeCardFromTable(card);
-      amountOfCardsRemoved++;
-    } catch {}
-
-    if (amountOfCardsRemoved < 1) {
+    if (amountOfCardsRemoved < cards.length) {
       throw new Error("Card was not found ine the player's cards");
     }
 
-    if (amountOfCardsRemoved > 1) {
+    if (amountOfCardsRemoved > cards.length) {
       throw new Error("Card is both in player's hand and on table");
     }
   }

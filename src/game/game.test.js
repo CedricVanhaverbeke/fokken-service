@@ -104,7 +104,7 @@ describe("game", () => {
 
       const prevHand = mockGame.getPlayer(referenceId).hand.length;
       const prevTable = mockGame.getPlayer(referenceId).table.flat().length;
-      mockGame.addCardToPlayer(referenceId, { number: 1, suit: 1 });
+      mockGame.addCardsToPlayer(referenceId, { number: 1, suit: 1 });
 
       expect(mockGame.getPlayer(referenceId).hand.length).toEqual(prevHand + 1);
       expect(mockGame.getPlayer(referenceId).table.flat().length).toEqual(
