@@ -1,4 +1,6 @@
 import gameSocket from "./socket";
 
-const port = 8000;
+require("dotenv").config();
+
+const port = process.env.PORT;
 gameSocket(port);

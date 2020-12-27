@@ -6,12 +6,12 @@ import Player from "../game/player";
 const gameSocket = (port) => {
   const io = Server(port, {
     cors: {
-      origin: "http://localhost:5000",
+      origin: /.*/,
       methods: ["GET", "POST"],
     },
   });
 
-  console.log("Socket listening started");
+  console.log(`started on port ${port}`);
 
   const games = {};
 
