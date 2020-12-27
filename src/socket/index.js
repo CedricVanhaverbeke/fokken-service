@@ -1,10 +1,10 @@
-import SocketIO from "socket.io";
+import Server from "socket.io";
 
 import Game from "../game/game";
 import Player from "../game/player";
 
-const gameSocket = (server, port) => {
-  const io = SocketIO(server, {
+const gameSocket = (port) => {
+  const io = Server(port, {
     cors: {
       origin: /.*/,
       methods: ["GET", "POST"],
