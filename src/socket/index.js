@@ -3,8 +3,6 @@ import Server from "socket.io";
 import Game from "../game/game";
 import Player from "../game/player";
 
-import validMoves from "../game/validMoves";
-
 const gameSocket = (port) => {
   const io = Server(port, {
     cors: {
