@@ -6,7 +6,7 @@ import Player from "../game/player";
 const gameSocket = (port) => {
   const io = Server(port, {
     cors: {
-      origin: /.*/,
+      origin: process.env.VALID_DOMAINS.split(","),
       methods: ["GET", "POST"],
     },
   });
