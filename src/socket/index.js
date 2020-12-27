@@ -82,7 +82,10 @@ const gameSocket = (port) => {
         : cards.number;
       const playedAmount = Array.isArray(cards) ? cards.length : 1;
 
-      const nextPlayer = game.setNextTurn(socket.id);
+      let nextPlayer;
+      if (playedNumber !== 10) {
+        nextPlayer = game.setNextTurn(socket.id);
+      }
       const drawedCards = game.deck.popCards(cards.length);
 
       game.addCardsToPlayedCards(cards);
@@ -95,6 +98,13 @@ const gameSocket = (port) => {
         game.addCardsToPlayer(socket.id, drawedCards);
       }
 
+      let playerIsOut;
+      if (game.playerHasNoCards(socket.id)) {
+        // player is out
+        game.setPlayerIsOut(socket.id);
+        playerIsOut = socket.id;
+      }
+
       game.players.forEach(({ socket: playerSocket }) => {
         playerSocket.emit(
           "CARD_PLAYED",
@@ -102,19 +112,45 @@ const gameSocket = (port) => {
             turn: nextPlayer,
             drawPileAmount: game.deck.size(),
             playedCards: game.playedCards,
+            playedAmount,
+            playerIsOut,
             message: `${
               game.players.find(({ id }) => id === socket.id).userName
             } played ${playedAmount} ${playedNumber}${
-              playedAmount > 1 ? "s" : ""
+              playedAmount > 1 ? "'s" : ""
             }`,
             ...game.getPlayerView(playerSocket.id),
           })
         );
       });
+
+      if (playedNumber === 10) {
+        setTimeout(() => {
+          game.playedCards = [];
+
+          game.players.forEach(({ socket: playerSocket }) => {
+            playerSocket.emit(
+              "EMPTY_STACK",
+              JSON.stringify({
+                turn: game.turn,
+                message: `${
+                  game.players.find(({ id }) => id === socket.id).userName
+                } played a 10 and removed the cards on the table `,
+              })
+            );
+          });
+        }, 1000);
+      }
     });
 
-    socket.on("TAKE_PLAYED_CARDS", () => {
-      const nextPlayer = game.setNextTurn(socket.id);
+    socket.on("TAKE_PLAYED_CARDS", (payload) => {
+      const { passTurn } = JSON.parse(payload || {});
+
+      let nextPlayer = game.turn;
+      if (passTurn) {
+        nextPlayer = game.setNextTurn(socket.id);
+      }
+
       game.addCardsToPlayer(socket.id, game.playedCards);
       game.playedCards = [];
 

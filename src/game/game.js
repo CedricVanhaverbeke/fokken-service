@@ -20,6 +20,14 @@ class Game {
     }
   }
 
+  playerHasNoCards(playerId) {
+    return this.players.find(({ id }) => playerId === id).hasNoCards();
+  }
+
+  setPlayerIsOut(playerId) {
+    this.players.find(({ id }) => playerId === id).isOut = true;
+  }
+
   // there can be mutliple cards played
   addCardsToPlayedCards(cards) {
     const newCards = Array.isArray(cards) ? cards : [cards];
@@ -63,7 +71,17 @@ class Game {
           table:
             id === playerId
               ? table
-              : table.map((stack) => [stack[0], undefined]),
+              : table.map((stack) => {
+                  if (stack.length > 1) {
+                    return [stack[0], undefined];
+                  }
+
+                  if (stack.length === 1) {
+                    return [undefined];
+                  }
+
+                  return [];
+                }),
         },
       ]),
     ]);
@@ -102,9 +120,13 @@ class Game {
   }
 
   setNextTurn() {
-    const newTurnIndex =
+    let newTurnIndex =
       (this.players.findIndex(({ id }) => this.turn === id) + 1) %
       this.players.length;
+    // Only include the players that are not out
+    while (this.players[newTurnIndex].isOut) {
+      newTurnIndex = (newTurnIndex + 1) % this.players.length;
+    }
 
     this.turn = this.players[newTurnIndex].id;
     return this.players[newTurnIndex].id;

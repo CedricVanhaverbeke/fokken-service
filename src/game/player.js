@@ -5,11 +5,16 @@ class Player {
     this.socket = socket;
     this.hand = [];
     this.table = [];
+    this.isOut = false;
   }
 
   addCardsToHand(cards) {
     const newCards = Array.isArray(cards) ? cards : [cards];
     this.hand = [...this.hand, ...newCards];
+  }
+
+  hasNoCards() {
+    return this.hand.length === 0 && this.table.flat().length === 0;
   }
 
   // Remove the card from somewhere
@@ -33,7 +38,7 @@ class Player {
     } catch {}
 
     if (amountOfCardsRemoved < cards.length) {
-      throw new Error("Card was not found ine the player's cards");
+      throw new Error("Card was not found in the player's cards");
     }
 
     if (amountOfCardsRemoved > cards.length) {

@@ -2,11 +2,18 @@ import Card from "./card";
 
 class Deck {
   constructor() {
-    const cards = Array.from(Array(4), (_, suit) => [
-      ...Array.from(Array(13), (_, number) => new Card(number + 1, suit)),
-    ]).flat();
+    //const cards = Array.from(Array(4), (_, suit) => [
+    //  ...Array.from(Array(13), (_, number) => new Card(number + 1, suit)),
+    //]).flat();
 
-    this.cards = this.shuffle(cards);
+    // For testing purposes:
+    this.cards = [
+      ...Array.from(Array(10), (_, i) => ({
+        number: i + 1,
+        suit: 0,
+      })).reverse(),
+    ];
+    //this.cards = this.shuffle(cards);
   }
 
   // Fisher yates shuffle as found on https://bost.ocks.org/mike/shuffle/
